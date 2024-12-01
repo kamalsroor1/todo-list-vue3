@@ -1,0 +1,444 @@
+// Variables
+$primary-color: #00BFA5;
+$secondary-color: #009688;
+$success-color: #4CAF50;
+$warning-color: #FFA000;
+$danger-color: #F44336;
+$text-color: #333;
+$border-radius: 12px;
+$transition-speed: 0.3s;
+
+// CSS Variables for theme switching
+:root {
+    --bg-color: #fff;
+    --card-bg: #fff;
+    --text-color: #333;
+    --border-color: #e0e0e0;
+    --hover-bg: #f5f5f5;
+}
+
+// Dark mode variables
+.dark-mode {
+    --bg-color: #121212;
+    --card-bg: #1E1E1E;
+    --text-color: #fff;
+    --border-color: #333;
+    --hover-bg: #2A2A2A;
+}
+
+// Mixins
+@mixin card {
+    background: var(--card-bg);
+    border-radius: $border-radius;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all $transition-speed ease;
+}
+
+@mixin button {
+    padding: 8px 16px;
+    border-radius: $border-radius;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-speed ease;
+    
+    &:hover {
+        transform: translateY(-1px);
+    }
+}
+
+// Global Styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Almarai', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    transition: background-color $transition-speed ease;
+    
+    &.rtl {
+        direction: rtl;
+        text-align: right;
+        font-family: 'Almarai', 'Poppins', sans-serif;
+    }
+}
+
+#app {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+// Header Styles
+header {
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    color: white;
+    padding: 24px;
+    border-radius: $border-radius;
+    margin-bottom: 24px;
+    
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 12px;
+        
+        button {
+            @include button;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 12px;
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+    
+    .date {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+}
+
+// Add Task Form
+.add-task {
+    @include card;
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    
+    input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: $border-radius;
+        background: var(--bg-color);
+        color: var(--text-color);
+        
+        &:focus {
+            outline: none;
+            border-color: $primary-color;
+        }
+    }
+    
+    .add-btn {
+        @include button;
+        background: $primary-color;
+        color: white;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &:hover {
+            background: darken($primary-color, 5%);
+        }
+    }
+}
+
+// Filters
+.filters {
+    @include card;
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    
+    button {
+        @include button;
+        background: transparent;
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        flex: 1;
+        
+        &:hover {
+            background: var(--hover-bg);
+        }
+        
+        &.active {
+            background: $primary-color;
+            color: white;
+            border-color: $primary-color;
+        }
+    }
+}
+
+// Tasks List
+.tasks-list {
+    list-style: none;
+    margin-bottom: 24px;
+    
+    li {
+        @include card;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        margin-bottom: 12px;
+        border: 1px solid var(--border-color);
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        &.completed {
+            .task-text {
+                text-decoration: line-through;
+                opacity: 0.7;
+            }
+        }
+        
+        &.ghost {
+            opacity: 0.5;
+        }
+    }
+    
+    .task-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .task-text {
+            flex: 1;
+        }
+        
+        .time {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .edit-input {
+            flex: 1;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: $border-radius;
+            background: var(--bg-color);
+            color: var(--text-color);
+            
+            &:focus {
+                outline: none;
+                border-color: $primary-color;
+            }
+        }
+    }
+    
+    .task-actions {
+        display: flex;
+        gap: 8px;
+        
+        .action-btn {
+            @include button;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            &.edit-btn {
+                background: $warning-color;
+                color: white;
+                
+                &:hover {
+                    background: darken($warning-color, 5%);
+                }
+            }
+            
+            &.delete-btn {
+                background: $danger-color;
+                color: white;
+                
+                &:hover {
+                    background: darken($danger-color, 5%);
+                }
+            }
+        }
+    }
+}
+
+// Tasks Summary
+.tasks-summary {
+    @include card;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    
+    .clear-btn {
+        @include button;
+        background: $danger-color;
+        color: white;
+        
+        &:hover {
+            background: darken($danger-color, 5%);
+        }
+    }
+}
+
+// Modal
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    
+    .modal-content {
+        @include card;
+        padding: 24px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        
+        h2 {
+            margin-bottom: 16px;
+        }
+        
+        p {
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            
+            button {
+                @include button;
+                min-width: 100px;
+                
+                &.confirm {
+                    background: $danger-color;
+                    color: white;
+                    
+                    &:hover {
+                        background: darken($danger-color, 5%);
+                    }
+                }
+                
+                &.cancel {
+                    background: var(--hover-bg);
+                    color: var(--text-color);
+                    
+                    &:hover {
+                        background: darken(#f5f5f5, 5%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// No Tasks Message
+.no-tasks {
+    text-align: center;
+    padding: 24px;
+    opacity: 0.7;
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+// Particle Animation
+.particle {
+    position: absolute;
+    pointer-events: none;
+    animation: particle 1s ease-out forwards;
+    
+    &.appear {
+        background: rgba($primary-color, 0.8);
+    }
+    
+    &.disappear {
+        background: rgba($danger-color, 0.8);
+    }
+}
+
+@keyframes particle {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+// RTL Specific Styles
+.rtl {
+    .header-actions,
+    .task-actions {
+        flex-direction: row-reverse;
+    }
+    
+    .task-content {
+        flex-direction: row-reverse;
+        
+        .time {
+            margin-right: auto;
+            margin-left: 0;
+        }
+    }
+}
+
+// Vue Cloak
+[v-cloak] {
+    display: none;
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuedraggable@4.1.0/dist/vuedraggable.umd.min.js"></script>
+</head>
+<body :class="{ 'dark-mode': isDarkMode, 'rtl': isArabic }">
+    <div id="app" v-cloak>
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>{{ translations[currentLang].title }}</h1>
+                <div class="header-actions">
+                    <button @click="toggleLang" class="lang-toggle">
+                        {{ currentLang === 'en' ? 'عربي' : 'English' }}
+                    </button>
+                    <button @click="toggleTheme" class="theme-toggle">
+                        <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="date">{{ today }}</div>
+        </header>
+
+        <!-- Add Task -->
+        <div class="add-task">
+            <input 
+                type="text" 
+                v-model="newTask" 
+                @keyup.enter="addTask"
+                :placeholder="translations[currentLang].addTaskPlaceholder"
+            >
+            <button @click="addTask" class="add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button 
+                v-for="filter in filters" 
+                :key="filter.value"
+                @click="currentFilter = filter.value"
+                :class="{ active: currentFilter === filter.value }"
+            >
+                {{ translations[currentLang][filter.label] }}
+            </button>
+        </div>
+
+        <!-- Tasks List -->
+        <ul class="tasks-list">
+            <li v-for="task in filteredTasks" 
+                :key="task.id"
+                :class="{ completed: task.completed }">
+                <div class="task-content">
+                    <input 
+                        type="checkbox" 
+                        v-model="task.completed"
+                        @change="updateTask(task)"
+                    >
+                    <span v-if="!task.editing" class="task-text" @dblclick="startEditing(task)">
+                        {{ task.text }}
+                    </span>
+                    <input 
+                        v-else
+                        type="text"
+                        class="edit-input"
+                        v-model="task.text"
+                        @blur="finishEditing(task)"
+                        @keyup.enter="finishEditing(task)"
+                        @keyup.esc="cancelEditing(task)"
+                        ref="editInput"
+                    >
+                    <span class="time">{{ task.time }}</span>
+                </div>
+                <div class="task-actions">
+                    <button @click="startEditing(task)" class="action-btn edit-btn">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button @click="confirmDelete(task)" class="action-btn delete-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </li>
+        </ul>
+
+        <!-- Tasks Summary -->
+        <div class="tasks-summary" v-if="tasks.length">
+            <span>{{ translations[currentLang].itemsLeft }}: {{ activeTasksCount }}</span>
+            <button 
+                v-if="completedTasksCount" 
+                @click="showDeleteModal = true" 
+                class="clear-btn"
+            >
+                {{ translations[currentLang].clearCompleted }}
+            </button>
+        </div>
+
+        <!-- No Tasks Message -->
+        <div v-if="!filteredTasks.length" class="no-tasks">
+            {{ translations[currentLang].noTasks }}
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal" v-if="showDeleteModal">
+            <div class="modal-content">
+                <h2>{{ translations[currentLang].confirmDelete }}</h2>
+                <p>{{ translations[currentLang].deleteWarning }}</p>
+                <div class="modal-actions">
+                    <button @click="clearCompleted" class="confirm">
+                        {{ translations[currentLang].confirm }}
+                    </button>
+                    <button @click="showDeleteModal = false" class="cancel">
+                        {{ translations[currentLang].cancel }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

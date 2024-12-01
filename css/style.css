@@ -1,0 +1,405 @@
+:root {
+  --bg-color: #fff;
+  --card-bg: #fff;
+  --text-color: #333;
+  --border-color: #e0e0e0;
+  --hover-bg: #f5f5f5;
+}
+
+.dark-mode {
+  --bg-color: #121212;
+  --card-bg: #1E1E1E;
+  --text-color: #fff;
+  --border-color: #333;
+  --hover-bg: #2A2A2A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", "Almarai", sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+body.rtl {
+  direction: rtl;
+  text-align: right;
+  font-family: "Almarai", "Poppins", sans-serif;
+}
+
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background: linear-gradient(135deg, #00BFA5, #009688);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+header .header-content h1 {
+  font-size: 24px;
+  font-weight: 600;
+}
+header .header-actions {
+  display: flex;
+  gap: 12px;
+}
+header .header-actions button {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px 12px;
+}
+header .header-actions button:hover {
+  transform: translateY(-1px);
+}
+header .header-actions button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+header .date {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.add-task {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+.add-task input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+.add-task input:focus {
+  outline: none;
+  border-color: #00BFA5;
+}
+.add-task .add-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #00BFA5;
+  color: white;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-task .add-btn:hover {
+  transform: translateY(-1px);
+}
+.add-task .add-btn:hover {
+  background: #00a68f;
+}
+
+.filters {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+.filters button {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  flex: 1;
+}
+.filters button:hover {
+  transform: translateY(-1px);
+}
+.filters button:hover {
+  background: var(--hover-bg);
+}
+.filters button.active {
+  background: #00BFA5;
+  color: white;
+  border-color: #00BFA5;
+}
+
+.tasks-list {
+  list-style: none;
+  margin-bottom: 24px;
+}
+.tasks-list li {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color);
+}
+.tasks-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.tasks-list li.completed .task-text {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.tasks-list li.ghost {
+  opacity: 0.5;
+}
+.tasks-list .task-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+.tasks-list .task-content input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.tasks-list .task-content .task-text {
+  flex: 1;
+}
+.tasks-list .task-content .time {
+  font-size: 12px;
+  opacity: 0.7;
+}
+.tasks-list .task-content .edit-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+.tasks-list .task-content .edit-input:focus {
+  outline: none;
+  border-color: #00BFA5;
+}
+.tasks-list .task-actions {
+  display: flex;
+  gap: 8px;
+}
+.tasks-list .task-actions .action-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tasks-list .task-actions .action-btn:hover {
+  transform: translateY(-1px);
+}
+.tasks-list .task-actions .action-btn.edit-btn {
+  background: #FFA000;
+  color: white;
+}
+.tasks-list .task-actions .action-btn.edit-btn:hover {
+  background: #e69000;
+}
+.tasks-list .task-actions .action-btn.delete-btn {
+  background: #F44336;
+  color: white;
+}
+.tasks-list .task-actions .action-btn.delete-btn:hover {
+  background: #f32c1e;
+}
+
+.tasks-summary {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+.tasks-summary .clear-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #F44336;
+  color: white;
+}
+.tasks-summary .clear-btn:hover {
+  transform: translateY(-1px);
+}
+.tasks-summary .clear-btn:hover {
+  background: #f32c1e;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal .modal-content {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+.modal .modal-content h2 {
+  margin-bottom: 16px;
+}
+.modal .modal-content p {
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+.modal .modal-content .modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.modal .modal-content .modal-actions button {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+.modal .modal-content .modal-actions button:hover {
+  transform: translateY(-1px);
+}
+.modal .modal-content .modal-actions button.confirm {
+  background: #F44336;
+  color: white;
+}
+.modal .modal-content .modal-actions button.confirm:hover {
+  background: #f32c1e;
+}
+.modal .modal-content .modal-actions button.cancel {
+  background: var(--hover-bg);
+  color: var(--text-color);
+}
+.modal .modal-content .modal-actions button.cancel:hover {
+  background: #e8e8e8;
+}
+
+.no-tasks {
+  text-align: center;
+  padding: 24px;
+  opacity: 0.7;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+.particle {
+  position: absolute;
+  pointer-events: none;
+  animation: particle 1s ease-out forwards;
+}
+.particle.appear {
+  background: rgba(0, 191, 165, 0.8);
+}
+.particle.disappear {
+  background: rgba(244, 67, 54, 0.8);
+}
+
+@keyframes particle {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+.rtl .header-actions,
+.rtl .task-actions {
+  flex-direction: row-reverse;
+}
+.rtl .task-content {
+  flex-direction: row-reverse;
+}
+.rtl .task-content .time {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+[v-cloak] {
+  display: none;
+}/*# sourceMappingURL=style.css.map */
